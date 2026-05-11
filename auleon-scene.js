@@ -20,37 +20,39 @@
   // Screens span 0.27 → 1.00 of progress, each 0.13 wide with 0.03 cross-fade
   // overlap into the next. Step interval is a uniform 0.10 — every step holds
   // for the same duration including the closing "zero analysts" beat.
+  // Red and blue scans no longer overlap — blue starts exactly when red
+  // finishes its full top-to-bottom pass.
   const P = {
     travelStart:    0.001,
-    unfoldStart:    0.018,
-    travelEnd:      0.08,
-    flatSettle:     0.08,
-    scanRedStart:   0.14,
-    scanRedEnd:     0.20,
-    scanBlueStart:  0.18,
-    scanBlueEnd:    0.24,
-    paperFadeStart: 0.22,
-    paperGone:      0.27,
-    s1:[0.27, 0.40],
-    s2:[0.37, 0.50],
-    s3:[0.47, 0.60],
-    s4:[0.57, 0.70],
-    s5:[0.67, 0.80],
-    s6:[0.77, 0.90],
-    s7:[0.87, 1.00],
+    unfoldStart:    0.026,
+    travelEnd:      0.117,
+    flatSettle:     0.117,
+    scanRedStart:   0.204,
+    scanRedEnd:     0.337,
+    scanBlueStart:  0.337,
+    scanBlueEnd:    0.424,
+    paperFadeStart: 0.395,
+    paperGone:      0.468,
+    s1:[0.468, 0.563],
+    s2:[0.541, 0.636],
+    s3:[0.614, 0.708],
+    s4:[0.687, 0.781],
+    s5:[0.759, 0.854],
+    s6:[0.832, 0.927],
+    s7:[0.905, 1.000],
   };
 
   // Text timing [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd]
   // Each block synced to its paired screen window.
   const TXT = {
-    hero:      [-0.10,  0.00,  0.04,  0.08],
-    reality:   [ 0.08,  0.11,  0.13,  0.16],
-    scan:      [ 0.14,  0.17,  0.22,  0.26],
-    digitize:  [ 0.270, 0.300, 0.370, 0.400],
-    outreach:  [ 0.370, 0.400, 0.470, 0.500],
-    negotiate: [ 0.470, 0.500, 0.670, 0.700],
-    submit:    [ 0.670, 0.700, 0.870, 0.900],
-    award:     [ 0.870, 0.900, 0.970, 1.000],
+    hero:      [-0.10,  0.000, 0.058, 0.117],
+    reality:   [ 0.117, 0.160, 0.189, 0.233],
+    scan:      [ 0.204, 0.248, 0.395, 0.453],
+    digitize:  [ 0.468, 0.490, 0.541, 0.563],
+    outreach:  [ 0.541, 0.563, 0.614, 0.636],
+    negotiate: [ 0.614, 0.636, 0.759, 0.781],
+    submit:    [ 0.759, 0.781, 0.905, 0.927],
+    award:     [ 0.905, 0.927, 0.978, 1.000],
   };
 
   // Slide direction (+1 = enters from right / exits right, -1 = from left)
@@ -245,7 +247,7 @@
     const v = DOM.bgVideo;
     const c = DOM.bgCanvas;
     if (!v || !c || bgFramesReady) return;
-    // Match canvas size to viewport (cover style) using the video’s native ratio.
+    // Match canvas size to viewport (cover style) using the video's native ratio.
     const w = v.videoWidth  || 1280;
     const h = v.videoHeight || 720;
     c.width = w; c.height = h;
@@ -279,7 +281,7 @@
       const onSeeked = () => { v.removeEventListener('seeked', onSeeked); resolve(); };
       v.addEventListener('seeked', onSeeked);
       try { v.currentTime = t; } catch (e) { resolve(); }
-      // Safety: don’t hang forever if the seek event never fires.
+      // Safety: don't hang forever if the seek event never fires.
       setTimeout(() => { v.removeEventListener('seeked', onSeeked); resolve(); }, 800);
     });
   }
@@ -290,7 +292,7 @@
     const total = bgFrames.length;
     // Pick the closest cached frame.
     let idx = Math.round(clamp(progress) * (total - 1));
-    // Clamp to what we’ve cached so far so partial caches still scrub.
+    // Clamp to what we've cached so far so partial caches still scrub.
     let maxCached = total - 1;
     while (maxCached >= 0 && !bgFrames[maxCached]) maxCached--;
     if (idx > maxCached) idx = maxCached;

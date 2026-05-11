@@ -11,29 +11,31 @@
 <!-- ── Progress line ─────────────────────────────────────── -->
 <div id="progress-line"></div>
 
-<!-- ── Nav ───────────────────────────────────────────────── -->
-<nav id="nav">
-  <img src="assets/logo.svg" alt="AuLeon" class="nav-logo" />
-  <div class="nav-right">
-    <button class="nav-chat-btn" onclick="toggleChat()">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="5.5" width="2" height="3" rx="1"/><rect x="3" y="3" width="2" height="8" rx="1"/><rect x="6" y="0.5" width="2" height="13" rx="1"/><rect x="9" y="2" width="2" height="10" rx="1"/><rect x="12" y="5" width="2" height="4" rx="1"/></svg>
-      Talk to Leo
-    </button>
-    <button class="nav-cta" onclick="slowScrollTo('cta-section')">Book a Meeting</button>
-  </div>
-</nav>
-
 <!-- ══════════════════════════════════════════════════════════
      PARALLAX SCROLL SECTION  (600vh, sticky hero inside)
 ══════════════════════════════════════════════════════════ -->
-<section id="scroll-section" style="height:400vh;">
+<section id="scroll-section" style="height:549vh;">
+  <!-- Nav lives inside the scroll-section so it sticks during the hero scene
+       and scrolls away together with the hero. -->
+  <nav id="nav">
+    <img src="assets/logo.svg" alt="AuLeon" class="nav-logo" />
+    <div class="nav-right">
+      <button class="nav-chat-btn" onclick="toggleChat()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="5.5" width="2" height="3" rx="1"/><rect x="3" y="3" width="2" height="8" rx="1"/><rect x="6" y="0.5" width="2" height="13" rx="1"/><rect x="9" y="2" width="2" height="10" rx="1"/><rect x="12" y="5" width="2" height="4" rx="1"/></svg>
+        Talk to Leo
+      </button>
+      <button class="nav-cta" onclick="slowScrollTo('cta-section')">Book a Meeting</button>
+    </div>
+  </nav>
   <div id="sticky-scene">
 
     <!-- (old particle/skyline/scan canvases removed — video is now the sole background) -->
     <canvas id="bg-canvas" style="display:none !important;"></canvas>
     <video   id="skyline-video" style="display:none !important;"></video>
     <canvas id="skyline-canvas" style="display:none !important;"></canvas>
-    <canvas id="blue-scan-canvas" style="display:none !important;"></canvas>
+    <canvas id="blue-scan-canvas"
+            style="position:absolute;top:-20%;left:-20%;width:140%;height:140%;
+                   z-index:11;pointer-events:none;mix-blend-mode:screen;"></canvas>
 
     <!-- Scroll-synced background video (stays in place, scrubbed by scroll).
          NOTE: src is assigned via JS as a Blob URL so the whole file is local
@@ -489,7 +491,6 @@
 
 <script src="auleon-scene.js"></script>
 <script>
-// ── Chat ──────────────────────────────────────────────────
 // ── Slow scroll-to (custom, ~5x slower than default smooth) ───────────────
 function slowScrollTo(target) {
   const startY = window.scrollY;
@@ -503,20 +504,17 @@ function slowScrollTo(target) {
   }
   const dist = endY - startY;
   if (Math.abs(dist) < 4) return;
-  // Linear, consistent speed (~5x slower than a default smooth scroll).
-  // Snappy linear scroll — fast enough that the button doesn't feel like a wait.
   const PX_PER_SEC = 4500;
   const duration   = Math.min(1400, Math.max(450, Math.abs(dist) / PX_PER_SEC * 1000));
   const startT     = performance.now();
   function step(now) {
     const t  = Math.min(1, (now - startT) / duration);
-    window.scrollTo(0, startY + dist * t);   // linear easing — same speed throughout
+    window.scrollTo(0, startY + dist * t);
     if (t < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
 }
 
-// Fast scroll for back-to-top — short and snappy.
 function fastScrollTo(y) {
   const startY = window.scrollY;
   const dist   = y - startY;
@@ -532,18 +530,15 @@ function fastScrollTo(y) {
   requestAnimationFrame(step);
 }
 
-// ── Back-to-top visibility ────────────────────────────────────────────────
 window.addEventListener('scroll', () => {
   const btn = document.getElementById('back-to-top');
   if (!btn) return;
   btn.classList.toggle('visible', window.scrollY > window.innerHeight * 0.6);
 }, { passive: true });
 
-// ── Skyline video graceful fallback ──────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const v = document.getElementById('skyline-video');
   if (!v) return;
-  // Probe for the file silently; only attach + reveal if it actually exists.
   const candidates = ['assets/skyline.mp4', 'assets/skyline.webm'];
   (async () => {
     for (const url of candidates) {
@@ -564,7 +559,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (_) { /* silent */ }
     }
-    // No video available — canvas skyline stays as the fallback.
   })();
 });
 
@@ -587,7 +581,6 @@ function sendChat() {
   addMsg(text, 'user');
   input.value = '';
   input.style.height = '';
-  // Stream response via Claude
   const msgs = document.getElementById('chat-messages');
   const el = document.createElement('div');
   el.className = 'chat-msg agent';
@@ -621,10 +614,8 @@ let micActive = false;
 function toggleMic() {
   micActive = !micActive;
   document.getElementById('chat-mic').classList.toggle('listening', micActive);
-  // Voice implementation hook
 }
 
-// Auto-resize textarea
 document.addEventListener('DOMContentLoaded', () => {
   const ta = document.getElementById('chat-input');
   if (ta) {
