@@ -519,7 +519,7 @@ function startAutoScroll() {
   function step(now) {
     if (cancelled) return;
     const t = Math.min(1, (now - startT) / DURATION);
-    window.scrollTo(0, startY + dist * t);
+    document.documentElement.scrollTop = startY + dist * t;
     if (t < 1) _autoScrollRAF = requestAnimationFrame(step);
   }
   _autoScrollRAF = requestAnimationFrame(step);

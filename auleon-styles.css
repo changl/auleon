@@ -19,14 +19,13 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { overflow-x: hidden; }
 
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-b);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 /* ── Grain + dot-grid overlay ────────────────────────────── */
@@ -56,7 +55,7 @@ body::after {
   backdrop-filter: blur(18px) saturate(140%);
   border-bottom: 1px solid var(--border);
 }
-.nav-logo { height: 52px; width: auto; }
+.nav-logo { height: 104px; width: auto; }
 .nav-right { display: flex; align-items: center; gap: 12px; }
 .nav-cta {
   font-family: var(--font-b); font-size: 13px; font-weight: 600;
