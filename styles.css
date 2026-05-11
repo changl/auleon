@@ -1,0 +1,615 @@
+/* AuLeon parallax wireframes — sketchy low-fi with brand gold accents */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500&family=Architects+Daughter&display=swap');
+
+:root {
+  --gold: #c8932b;
+  --gold-2: #e4b94a;
+  --gold-soft: #f3dc94;
+  --paper: #f4ecdb;
+  --paper-2: #ece0c4;
+  --ink: #2b241a;
+  --ink-soft: #5e5240;
+  --bg: #1a1714;
+  --bg-2: #232019;
+  --bg-3: #100e0c;
+  --rule: rgba(43, 36, 26, 0.35);
+  --red: #c8412b;
+  --blue: #4f88c8;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--paper);
+  font-family: 'Patrick Hand', 'Comic Sans MS', sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Dark textured backdrop — film grain + faint gold particles */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(rgba(228, 185, 74, 0.04) 1px, transparent 1px),
+    radial-gradient(rgba(228, 185, 74, 0.02) 1px, transparent 1px);
+  background-size: 80px 80px, 30px 30px;
+  background-position: 0 0, 15px 15px;
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at top, transparent 30%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- App shell ---------- */
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+}
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 22px;
+  margin-bottom: 28px;
+  border-bottom: 1px dashed rgba(228, 185, 74, 0.25);
+}
+.app-brand { display: flex; align-items: center; gap: 14px; }
+.app-brand img { height: 44px; width: auto; }
+.app-brand-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.app-brand-meta .ttl {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  color: var(--gold-2);
+}
+.app-brand-meta .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(244, 236, 219, 0.55);
+  letter-spacing: 0.4px;
+}
+
+.app-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.app-tab {
+  font-family: 'Patrick Hand', sans-serif;
+  font-size: 17px;
+  background: transparent;
+  border: 1.5px dashed rgba(228, 185, 74, 0.4);
+  color: rgba(244, 236, 219, 0.75);
+  padding: 8px 14px;
+  border-radius: 14px 4px 18px 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.app-tab:hover { color: var(--gold-2); border-color: rgba(228, 185, 74, 0.7); }
+.app-tab.is-active {
+  background: var(--gold-2);
+  color: var(--bg);
+  border-color: var(--gold-2);
+  border-style: solid;
+  font-weight: 700;
+}
+.app-tab .tab-no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  margin-right: 6px;
+  opacity: 0.7;
+}
+
+.app-intro {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: rgba(244, 236, 219, 0.7);
+  margin-bottom: 24px;
+  max-width: 900px;
+}
+.app-intro b { color: var(--gold-2); font-weight: 700; }
+
+/* ---------- Sketch sheet (paper mounted on the wall) ---------- */
+.sk-sheet {
+  position: relative;
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(43,36,26,0.04) 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(43,36,26,0.05) 0, transparent 35%);
+  color: var(--ink);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 18px 40px rgba(0,0,0,0.5),
+    0 4px 8px rgba(0,0,0,0.3);
+  margin-bottom: 56px;
+  padding: 0;
+  overflow: hidden;
+}
+.sk-sheet::before {
+  /* tape */
+  content: "";
+  position: absolute;
+  top: -12px; left: 40px;
+  width: 90px; height: 22px;
+  background: rgba(228, 185, 74, 0.35);
+  border-left: 1px solid rgba(228, 185, 74, 0.5);
+  border-right: 1px solid rgba(228, 185, 74, 0.5);
+  transform: rotate(-2deg);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.sk-sheet::after {
+  content: "";
+  position: absolute;
+  top: -10px; right: 60px;
+  width: 70px; height: 20px;
+  background: rgba(228, 185, 74, 0.3);
+  transform: rotate(3deg);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.sk-sheet-tab {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 28px 14px;
+  border-bottom: 1.5px dashed rgba(43, 36, 26, 0.3);
+  background: linear-gradient(to bottom, rgba(228,185,74,0.1), transparent);
+}
+.sk-sheet-tab-label {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 24px;
+  color: var(--ink);
+  letter-spacing: 0.3px;
+}
+.sk-sheet-tab-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.sk-sheet-body { padding: 28px; }
+
+/* ---------- Frame stub ---------- */
+.sk-frame {
+  position: relative;
+  background: rgba(43, 36, 26, 0.04);
+  border: 1.5px dashed rgba(43, 36, 26, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  padding: 14px;
+}
+.sk-frame-corner {
+  position: absolute;
+  width: 14px; height: 14px;
+  border: 2px solid rgba(43,36,26,0.6);
+}
+.sk-frame-corner-tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+.sk-frame-corner-tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+.sk-frame-corner-bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+.sk-frame-corner-br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+.sk-frame-meta {
+  position: absolute;
+  top: 8px; left: 10px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.sk-frame-no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.5px;
+}
+.sk-frame-title {
+  font-family: 'Caveat', cursive;
+  font-size: 17px;
+  color: var(--ink);
+}
+.sk-frame-note {
+  position: absolute;
+  bottom: 6px; right: 10px;
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.sk-glyph {
+  width: 70%;
+  height: 70%;
+  max-height: 180px;
+  color: var(--ink-soft);
+  margin-top: 16px;
+}
+.sk-frame-paper { background: rgba(244, 236, 219, 0.4); }
+.sk-frame-ball { background: rgba(43, 36, 26, 0.05); }
+.sk-frame-unfolded { background: rgba(228, 185, 74, 0.06); }
+.sk-frame-scan-red { background: rgba(200, 65, 43, 0.06); border-color: rgba(200,65,43,0.5); }
+.sk-frame-scan-blue { background: rgba(79, 136, 200, 0.06); border-color: rgba(79,136,200,0.5); }
+.sk-frame-screen { background: rgba(43, 36, 26, 0.06); }
+
+/* ---------- Text stub ---------- */
+.sk-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sk-text-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+.sk-text-headline {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 22px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.sk-text-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sk-text-line {
+  height: 6px;
+  background: rgba(43, 36, 26, 0.2);
+  border-radius: 2px;
+}
+.sk-text-accent .sk-text-headline { color: var(--gold); }
+.sk-text-accent .sk-text-line { background: rgba(200, 147, 43, 0.4); }
+.sk-text-note {
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* ---------- Note (handwritten annotation) ---------- */
+.sk-note {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  display: inline;
+  line-height: 1.2;
+}
+.sk-note-gold { color: var(--gold); }
+.sk-note-gray { color: rgba(43, 36, 26, 0.55); }
+.sk-note-red { color: var(--red); }
+.sk-note-blue { color: var(--blue); }
+.sk-note-arrow { font-size: 22px; }
+
+/* ---------- Scroll rail ---------- */
+.sk-rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 0 20px 28px;
+  min-width: 220px;
+}
+.sk-rail-line {
+  position: absolute;
+  top: 24px; bottom: 24px; left: 8px;
+  width: 0;
+  border-left: 2px dashed rgba(43, 36, 26, 0.4);
+}
+.sk-rail-step { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.sk-rail-dot {
+  width: 14px; height: 14px;
+  border: 2px solid var(--ink-soft);
+  border-radius: 50%;
+  background: var(--paper);
+  flex: none;
+  margin-left: -3px;
+}
+.sk-rail-step.is-active .sk-rail-dot {
+  background: var(--gold-2);
+  border-color: var(--gold);
+}
+.sk-rail-label {
+  font-family: 'Caveat', cursive;
+  font-size: 17px;
+  color: var(--ink);
+}
+.sk-rail-step.is-active .sk-rail-label { color: var(--gold); font-weight: 700; }
+
+/* ---------- Section title ---------- */
+.sk-section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 32px 0 14px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid rgba(43, 36, 26, 0.2);
+}
+.sk-section-no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+.sk-section-name {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 22px;
+  color: var(--ink);
+}
+.sk-section-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Viewport mock (phone/desktop screen sketch) ---------- */
+.sk-viewport {
+  position: relative;
+  background: var(--bg-2);
+  border: 1.5px solid rgba(43, 36, 26, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+  color: var(--paper);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.sk-viewport.is-dark { background: linear-gradient(180deg, #1a1714, #100e0c); }
+.sk-viewport-chrome {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgba(228,185,74,0.1);
+}
+.sk-vp-dot {
+  width: 7px; height: 7px;
+  background: rgba(228,185,74,0.4);
+  border-radius: 50%;
+}
+.sk-vp-url {
+  margin-left: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(244, 236, 219, 0.5);
+}
+.sk-viewport-label {
+  position: absolute;
+  top: 32px; left: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: rgba(228, 185, 74, 0.7);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 4;
+  background: rgba(0,0,0,0.5);
+  padding: 2px 6px;
+  border: 1px dashed rgba(228, 185, 74, 0.3);
+}
+.sk-viewport-tag {
+  position: absolute;
+  bottom: 8px; right: 10px;
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  color: rgba(228, 185, 74, 0.8);
+  z-index: 4;
+}
+.sk-viewport-body {
+  position: absolute;
+  inset: 26px 0 0 0;
+}
+
+/* ---------- Chat trigger sketches ---------- */
+.sk-chat-bubble {
+  position: relative;
+  width: 60px; height: 60px;
+  background: var(--gold-2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.sk-chat-orb {
+  position: relative;
+  width: 90px; height: 90px;
+  background: radial-gradient(circle at 35% 35%, var(--gold-2), var(--gold) 60%, #6e4d10);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px;
+  box-shadow: 0 0 40px rgba(228,185,74,0.6);
+}
+.sk-chat-orb-pulse {
+  position: absolute; inset: -10px;
+  border: 2px solid rgba(228,185,74,0.4);
+  border-radius: 50%;
+  animation: orbPulse 2.4s ease-out infinite;
+}
+@keyframes orbPulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+.sk-chat-dock {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(43, 36, 26, 0.85);
+  border: 1.5px solid rgba(228, 185, 74, 0.4);
+  border-radius: 100px;
+  padding: 12px 22px;
+  font-family: 'Patrick Hand', sans-serif;
+  color: rgba(244, 236, 219, 0.7);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.sk-chat-dock-mic, .sk-chat-dock-send {
+  font-size: 22px;
+  color: var(--gold-2);
+}
+.sk-chat-dock-input { font-size: 16px; flex: 1; }
+.sk-chat-nav {
+  display: inline-block;
+  padding: 8px 18px;
+  background: var(--gold-2);
+  color: var(--bg);
+  font-family: 'Patrick Hand', sans-serif;
+  font-weight: 700;
+  border-radius: 6px;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Direction-specific helpers ---------- */
+.row { display: flex; gap: 22px; }
+.row-2 > * { flex: 1; }
+.row-3 > * { flex: 1; }
+
+.scroll-strip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 16px 0;
+}
+
+.beat {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 18px;
+  padding: 14px;
+  border: 1.5px dashed rgba(43, 36, 26, 0.25);
+  border-radius: 6px;
+  background: rgba(228, 185, 74, 0.04);
+}
+.beat-no {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 28px;
+  color: var(--gold);
+  text-align: center;
+  border-right: 1.5px dashed rgba(43, 36, 26, 0.25);
+  padding-right: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.beat-no .scroll-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+.beat-body { display: flex; flex-direction: column; gap: 8px; }
+.beat-title {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 19px;
+  color: var(--ink);
+}
+.beat-actions {
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.beat-actions span::before { content: "· "; color: var(--gold); }
+
+.scroll-arrow {
+  align-self: center;
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* Hide annotation when toggled off */
+.no-annotations .sk-frame-note,
+.no-annotations .sk-text-note { display: none; }
+
+/* ---------- Hero stage (live preview-ish) ---------- */
+.stage {
+  position: relative;
+  background: linear-gradient(180deg, #181512 0%, #100e0b 100%);
+  border-radius: 8px;
+  border: 1.5px solid rgba(228,185,74,0.25);
+  overflow: hidden;
+  height: 360px;
+}
+.stage-grain {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(rgba(228,185,74,0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+.stage-stage-label {
+  position: absolute;
+  top: 10px; left: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(228,185,74,0.6);
+  letter-spacing: 0.5px;
+}
+
+/* ---------- Caption strip below diagram ---------- */
+.caption-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-top: 1.5px dashed rgba(43, 36, 26, 0.25);
+  font-family: 'Caveat', cursive;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+.caption-strip b { color: var(--gold); }
+
+/* ---------- Pros/cons list ---------- */
+.pc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 6px;
+  background: rgba(43, 36, 26, 0.05);
+}
+.pc h4 {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 15px;
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+.pc ul {
+  margin: 0;
+  padding-left: 18px;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.pc .pros h4 { color: var(--gold); }
+.pc .cons h4 { color: var(--red); }
