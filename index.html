@@ -82,7 +82,7 @@
       <h1 class="txt-headline">The complexity behind every winning bid.</h1>
       <p class="txt-body">Custom AI agents that handle the entire RFQ workflow — from the first crumpled document to contract award. No spreadsheets. No missed annotations. No lost context.</p>
       <div style="display:flex;gap:12px;margin-top:26px;">
-        <button class="txt-cta" onclick="slowScrollTo('scroll-section')">See How It Works</button>
+        <button class="txt-cta" onclick="startAutoScroll()">See How It Works</button>
         <button class="txt-cta secondary" onclick="toggleChat()">Talk to Leo</button>
       </div>
     </div>
@@ -135,7 +135,7 @@
       <h2 class="txt-headline">Zero analysts.<br>One agent<br>harness.</h2>
       <p class="txt-body">Your messiest workflow — ingested, structured, executed, and delivered on time. This is what the AuLeon Agent Harness does for mid-market enterprises.</p>
       <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;">
-        <button class="txt-cta" onclick="slowScrollTo('scroll-section')">See How It Works</button>
+        <button class="txt-cta" onclick="startAutoScroll()">See How It Works</button>
         <button class="txt-cta secondary" onclick="toggleChat()">Talk to Leo</button>
       </div>
     </div>
@@ -491,6 +491,40 @@
 
 <script src="auleon-scene.js"></script>
 <script>
+// ── Auto-scroll: 18-second guided tour from current position to page bottom ──
+let _autoScrollRAF = null;
+
+function startAutoScroll() {
+  if (_autoScrollRAF) cancelAnimationFrame(_autoScrollRAF);
+
+  const startY = window.scrollY;
+  const endY   = document.body.scrollHeight - window.innerHeight;
+  const dist   = endY - startY;
+  if (dist < 4) return;
+
+  const DURATION = 18000;
+  const startT   = performance.now();
+  let cancelled  = false;
+
+  function cancel() {
+    cancelled = true;
+    window.removeEventListener('wheel',      cancel);
+    window.removeEventListener('touchstart', cancel);
+    window.removeEventListener('keydown',    cancel);
+  }
+  window.addEventListener('wheel',      cancel, { passive: true, once: true });
+  window.addEventListener('touchstart', cancel, { passive: true, once: true });
+  window.addEventListener('keydown',    cancel, { once: true });
+
+  function step(now) {
+    if (cancelled) return;
+    const t = Math.min(1, (now - startT) / DURATION);
+    window.scrollTo(0, startY + dist * t);
+    if (t < 1) _autoScrollRAF = requestAnimationFrame(step);
+  }
+  _autoScrollRAF = requestAnimationFrame(step);
+}
+
 // ── Slow scroll-to (custom, ~5x slower than default smooth) ───────────────
 function slowScrollTo(target) {
   const startY = window.scrollY;
